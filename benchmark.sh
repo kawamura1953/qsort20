@@ -9,7 +9,7 @@ prin=benchmark
 
 echo '----------------- benchmark.txt begin -------------------- '           >$prin.txt
 echo ' '                                                                    >>$prin.txt
-echo '@@ƒL[:“¯’l‚È‚µ —v‘f:1–œŒÂ@—v‘fƒTƒCƒY:8,20,80,1000byte '           >>$prin.txt
+echo 'ã€€ã€€ã‚­ãƒ¼:åŒå€¤ãªã— è¦ç´ :1ä¸‡å€‹ã€€è¦ç´ ã‚µã‚¤ã‚º:8,20,80,1000byte '           >>$prin.txt
 time ./my_qsort    -3      10000         8       4000      -1  -1  -1  0    >>$prin.txt
 time ./qsort20     -3      10000         8       4000      -1  -1  -1  0    >>$prin.txt
 echo ' '                                                                    >>$prin.txt
@@ -22,7 +22,7 @@ echo ' '                                                                    >>$p
 time ./my_qsort    -3      10000      1000        600      -1  -1  -1  0    >>$prin.txt
 time ./qsort20     -3      10000      1000        600      -1  -1  -1  0    >>$prin.txt
 echo ' '                                                                    >>$prin.txt
-echo '@ƒL[Ží•Ê:100Ží@—v‘f:1–œŒÂ@—v‘fƒTƒCƒY:8,20,80,1000byte '           >>$prin.txt
+echo 'ã€€ã‚­ãƒ¼ç¨®åˆ¥:100ç¨®ã€€è¦ç´ :1ä¸‡å€‹ã€€è¦ç´ ã‚µã‚¤ã‚º:8,20,80,1000byte '           >>$prin.txt
 time ./my_qsort   100      10000         8       6000      -1  -1  -1  0    >>$prin.txt
 time ./qsort20    100      10000         8       6000      -1  -1  -1  0    >>$prin.txt
 echo ' '                                                                    >>$prin.txt
@@ -35,7 +35,7 @@ echo ' '                                                                    >>$p
 time ./my_qsort   100      10000      1000        500      -1  -1  -1  0    >>$prin.txt
 time ./qsort20    100      10000      1000        500      -1  -1  -1  0    >>$prin.txt
 echo ' '                                                                    >>$prin.txt
-echo '@@ƒL[Ží•Ê:2Ží@—v‘f:1–œŒÂ@—v‘fƒTƒCƒY:8,20,80,1000byte '           >>$prin.txt
+echo 'ã€€ã€€ã‚­ãƒ¼ç¨®åˆ¥:2ç¨®ã€€è¦ç´ :1ä¸‡å€‹ã€€è¦ç´ ã‚µã‚¤ã‚º:8,20,80,1000byte '           >>$prin.txt
 time ./my_qsort     2      10000         8      30000      -1  -1  -1  0    >>$prin.txt
 time ./qsort20      2      10000         8      30000      -1  -1  -1  0    >>$prin.txt
 echo ' '                                                                    >>$prin.txt
@@ -49,7 +49,7 @@ time ./my_qsort     2      10000      1000       1200      -1  -1  -1  0    >>$p
 time ./qsort20      2      10000      1000       1200      -1  -1  -1  0    >>$prin.txt
 echo ' '                                                                    >>$prin.txt
 echo ' '                                                                    >>$prin.txt
-echo '@ ƒL[:“¯’l‚È‚µ@•S`•S–œ—v‘f@—v‘fƒTƒCƒY:200byte '                  >>$prin.txt
+echo 'ã€€ ã‚­ãƒ¼:åŒå€¤ãªã—ã€€ç™¾ï½žç™¾ä¸‡è¦ç´ ã€€è¦ç´ ã‚µã‚¤ã‚º:200byte '                  >>$prin.txt
 time ./my_qsort    -3        100       200     400000      -1  -1  -1  0    >>$prin.txt
 time ./qsort20     -3        100       200     400000      -1  -1  -1  0    >>$prin.txt
 echo ' '                                                                    >>$prin.txt
@@ -66,9 +66,9 @@ time ./my_qsort    -3    1000000       200         11      -1  -1  -1  0    >>$p
 time ./qsort20     -3    1000000       200         11      -1  -1  -1  0    >>$prin.txt
 echo ' '                                                                    >>$prin.txt
 echo '=================  benchmark.txt end  ==================== '          >>$prin.txt
-echo 'my_qsortFƒxƒ“ƒ`ƒ}[ƒNƒeƒXƒgŽÀs‚ÌŒvŽZ‹@ã‚Ì C ƒ‰ƒCƒuƒ‰ƒŠ‚Ì qsort '   >>$prin.txt
-echo 'qsort20 F¡‰ñŒöŠJ‚µ‚½ qsort20‚Ì qsort '                              >>$prin.txt
-echo 'd=ƒL[Ží—Þ (d=-3‚ÍAƒ†ƒj[ƒN—”Bd=k‚ÍArand()%k ‚ÅƒL[‚ðŽZoB '    >>$prin.txt
-echo 'e=—v‘f” s=—v‘fƒTƒCƒY RŒJ•Ô‚µ‰ñ” c=”äŠr‰ñ”/R T=ˆ—•b” '           >>$prin.txt
-echo 'Šes‚ÌÅŒã‚Ì”’l‚ªƒ\[ƒg‚P‰ñ‚ ‚½‚è‚Ìˆ—ŽžŠÔ(10ƒÊ•b’PˆÊ)‚Å‚· '        >>$prin.txt
+echo 'my_qsortï¼šãƒ™ãƒ³ãƒãƒžãƒ¼ã‚¯ãƒ†ã‚¹ãƒˆå®Ÿè¡Œã®è¨ˆç®—æ©Ÿä¸Šã® C ãƒ©ã‚¤ãƒ–ãƒ©ãƒªã® qsort '   >>$prin.txt
+echo 'qsort20 ï¼šä»Šå›žå…¬é–‹ã—ãŸ qsort20ã® qsort '                              >>$prin.txt
+echo 'd=ã‚­ãƒ¼ç¨®é¡ž (d=-3ã¯ã€ãƒ¦ãƒ‹ãƒ¼ã‚¯ä¹±æ•°ã€‚d=kã¯ã€rand()%k ã§ã‚­ãƒ¼ã‚’ç®—å‡ºã€‚ '    >>$prin.txt
+echo 'e=è¦ç´ æ•° s=è¦ç´ ã‚µã‚¤ã‚º Rç¹°è¿”ã—å›žæ•° c=æ¯”è¼ƒå›žæ•°/R T=å‡¦ç†ç§’æ•° '           >>$prin.txt
+echo 'å„è¡Œã®æœ€å¾Œã®æ•°å€¤ãŒã‚½ãƒ¼ãƒˆï¼‘å›žã‚ãŸã‚Šã®å‡¦ç†æ™‚é–“(10Î¼ç§’å˜ä½)ã§ã™ '        >>$prin.txt
 echo ' '                                                                    >>$prin.txt

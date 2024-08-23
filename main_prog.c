@@ -28,37 +28,37 @@ char *vec, *chk;
 
 void do_qsort(int do_qs) {int i,j,x,t,h;
 
- srand( div_val + arr_max + 556  ); //—”‚Ì‰Šú‰» 
+ srand( div_val + arr_max + 556  ); //ä¹±æ•°ã®åˆæœŸåŒ– 
 
  for (counter=0; counter<itarate; counter++) {
-   /*ƒf[ƒ^‚ğ—pˆÓ‚·‚é*/
-   if (div_val == 0 ) for (i = 0; i < arr_max; i++) KEY(i)= 5;         /*ˆê’è*/
-   else if (div_val == -1) for (i = 0; i < arr_max; i++) KEY(i)= i+1;       /*¸‡*/
-   else if (div_val == -2) for (i = 0; i < arr_max; i++) KEY(i)= arr_max-i; /*~‡*/
-   else if (div_val == 1 ) for (i = 0; i < arr_max; i++) KEY(i)= rand();  /*—”*/
+   /*ãƒ‡ãƒ¼ã‚¿ã‚’ç”¨æ„ã™ã‚‹*/
+   if (div_val == 0 ) for (i = 0; i < arr_max; i++) KEY(i)= 5;         /*ä¸€å®š*/
+   else if (div_val == -1) for (i = 0; i < arr_max; i++) KEY(i)= i+1;       /*æ˜‡é †*/
+   else if (div_val == -2) for (i = 0; i < arr_max; i++) KEY(i)= arr_max-i; /*é™é †*/
+   else if (div_val == 1 ) for (i = 0; i < arr_max; i++) KEY(i)= rand();  /*ä¹±æ•°*/
    else if (div_val >= 2 ) for (i = 0; i < arr_max; i++) KEY(i)= rand()%div_val;
    else if (div_val == -3) {
-     for (i = 0; i < arr_max; i++) KEY(i)= i;       /*“¯’lƒL[‚ª‚È‚¢—”@“ü‚ê‘Ö‚¦‚Å*/
+     for (i = 0; i < arr_max; i++) KEY(i)= i;       /*åŒå€¤ã‚­ãƒ¼ãŒãªã„ä¹±æ•°ã€€å…¥ã‚Œæ›¿ãˆã§*/
      for (i = 0; i < arr_max; i++) {x=rand()%arr_max; t=KEY(i); KEY(i)=KEY(x); KEY(x)=t;}
    }
    else die("ill div_val");
 
    if (rec_siz >= 8)
-     for (i = 0; i < arr_max; i++) DATA(i) = i;   /*ŒŸ¸‚Ì‚½‚ß‚Ì€”õ*/
+     for (i = 0; i < arr_max; i++) DATA(i) = i;   /*æ¤œæŸ»ã®ãŸã‚ã®æº–å‚™*/
 
-   if (do_qs) qsort( (char*)vec, arr_max, rec_siz, cmpfnc );   /*ƒ\[ƒg‚ÌÀs*/
+   if (do_qs) qsort( (char*)vec, arr_max, rec_siz, cmpfnc );   /*ã‚½ãƒ¼ãƒˆã®å®Ÿè¡Œ*/
 
-   /*ˆÈ‰º‚Åƒ\[ƒg‚Å‚«‚½‚±‚Æ‚ğŒŸ¸‚·‚é*/
+   /*ä»¥ä¸‹ã§ã‚½ãƒ¼ãƒˆã§ããŸã“ã¨ã‚’æ¤œæŸ»ã™ã‚‹*/
    for (i = 1; i < arr_max; i++)
      if (div_val>=0 ? KEY(i-1)>KEY(i) : KEY(i-1)>=KEY(i)) {
        if (do_qs==0) continue;
        puts("");
        {for (h = 0; h < arr_max && h<40; h++) printf(" %d",KEY(h)); puts(" arr_max error");}
-       {for (h = 0; h <= i && h<40; h++) printf(" ."); puts("© error is here");}
+       {for (h = 0; h <= i && h<40; h++) printf(" ."); puts("â† error is here");}
        printf("  counter=%d   error i=%d  ",counter,i);
        die("not sorted  do_qsort(1)");
      }else{
-       if (do_qs==0) continue;  // do_qsort(1) do_qsort(0) ‚ÌŠÔ‚ğ‚Å‚«‚é‚¾‚¯‡‚í‚¹‚é‚½‚ß‚Ìˆ—
+       if (do_qs==0) continue;  // do_qsort(1) do_qsort(0) ã®æ™‚é–“ã‚’ã§ãã‚‹ã ã‘åˆã‚ã›ã‚‹ãŸã‚ã®å‡¦ç†
      }
    if (rec_siz >= 8) {
      for (i = 0; i < arr_max; i++) chk[i] = 0;
@@ -77,14 +77,14 @@ int main( int argc, char **argv ) {
  if (sizeof(char*)!=sizeof(size_t)) die("sizeof(char*)!=sizeof(size_t)");
  if (argc != 9) die("Usage: main.exe div_val arr_max rec_siz itarate MID1 MID2 MID3 cmp");
  
- div_val = atoi(argv[1]);       /*ƒeƒXƒgƒf[ƒ^‚Ìí—Ş‚ğw’è‚·‚é rand()%div_val“™*/
- arr_max = atoi(argv[2]);       /*—v‘f‚ÌŒÂ”(—v‘f”)*/
- rec_siz = atoi(argv[3]);       /*—v‘f‚Ì‘å‚«‚³(—v‘fƒTƒCƒY)*/
- itarate = atoi(argv[4]);       /*ŒJ‚è•Ô‚µ‰ñ”*/
+ div_val = atoi(argv[1]);       /*ãƒ†ã‚¹ãƒˆãƒ‡ãƒ¼ã‚¿ã®ç¨®é¡ã‚’æŒ‡å®šã™ã‚‹ rand()%div_valç­‰*/
+ arr_max = atoi(argv[2]);       /*è¦ç´ ã®å€‹æ•°(è¦ç´ æ•°)*/
+ rec_siz = atoi(argv[3]);       /*è¦ç´ ã®å¤§ãã•(è¦ç´ ã‚µã‚¤ã‚º)*/
+ itarate = atoi(argv[4]);       /*ç¹°ã‚Šè¿”ã—å›æ•°*/
  if (atoi(argv[5])>=0) _QS_MID1 = atoi(argv[5]);
  if (atoi(argv[6])>=0) _QS_MID2 = atoi(argv[6]);
  if (atoi(argv[7])>=0) _QS_MID3 = atoi(argv[7]);
- cmp_loop  = atoi(argv[8]);     /*”äŠrŠÖ”‚Ìd‚½‚³‚ğ’²®‚·‚é*/
+ cmp_loop  = atoi(argv[8]);     /*æ¯”è¼ƒé–¢æ•°ã®é‡ãŸã•ã‚’èª¿æ•´ã™ã‚‹*/
  if (rec_siz == 0) rec_siz = sizeof(char*);
                                 
  fprintf(stderr,"\n%-7s d=%d e=%d s=%d %dMB R%d ",
@@ -95,8 +95,8 @@ int main( int argc, char **argv ) {
  printf("%c%03d:%03d:%03d:%d:",(sizeof(char*)==8?'M':'m'),_QS_MID1,_QS_MID2,_QS_MID3,cmp_loop);
  fflush(stdout);
 
- if (rec_siz < 4 || 100000 < rec_siz) die("–{ƒvƒƒOƒ‰ƒ€‚Å‚Íu—v‘f‚ÌƒoƒCƒgƒTƒCƒY‚Í‚SˆÈã&10–œˆÈ‰ºv");
- if (rec_siz % 4) die("–{ƒvƒƒOƒ‰ƒ€‚Å‚Íu—v‘f‚ÌƒoƒCƒgƒTƒCƒY‚Í‚S‚Ì”{”v‚ğ‰¼’è");
+ if (rec_siz < 4 || 100000 < rec_siz) die("æœ¬ãƒ—ãƒ­ã‚°ãƒ©ãƒ ã§ã¯ã€Œè¦ç´ ã®ãƒã‚¤ãƒˆã‚µã‚¤ã‚ºã¯ï¼”ä»¥ä¸Š&10ä¸‡ä»¥ä¸‹ã€");
+ if (rec_siz % 4) die("æœ¬ãƒ—ãƒ­ã‚°ãƒ©ãƒ ã§ã¯ã€Œè¦ç´ ã®ãƒã‚¤ãƒˆã‚µã‚¤ã‚ºã¯ï¼”ã®å€æ•°ã€ã‚’ä»®å®š");
  if ((vec = (char*)malloc((arr_max+5)*rec_siz)) == NULL) die("vec NULL");
  if ((chk = (char*)malloc(arr_max)) == NULL) die("chk NULL");
  

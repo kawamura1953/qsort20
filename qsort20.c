@@ -2,23 +2,23 @@
 /*                                                 */
 /*     qsort  (Quick sort function)     qs20       */
 /*                                                 */
-/* by ‰Í‘º ’ms (kawamura tomoyuki)    2024.02.01  */
-/*       §745-0845 RŒûŒ§ü“ìs‰Í“Œ’¬3-2          */
+/* by æ²³æ‘ çŸ¥è¡Œ (kawamura tomoyuki)    2024.02.01  */
+/*       ã€’745-0845 å±±å£çœŒå‘¨å—å¸‚æ²³æ±ç”º3-2          */
 /*             t-kawa@crux.ocn.ne.jp               */
 /***************************************************/
 
-int _QS_SORT=0;    // ’¼Úƒ\[ƒg/ŠÔÚƒ\[ƒg‚ÌØ‘Ö‚¦§Œä  0:©“®‘I‘ğ  1:’¼Úƒ\[ƒg  2:ŠÔÚƒ\[ƒg
-int _QS_RNDM=0;    // 0:–hŒä‚È‚µ  1:ƒ\[ƒgŠÔ‚ğ”š‘‚³‚¹‚éUŒ‚‚ğ—”‚ğ—p‚¢‚Ä–hŒä‚·‚é  2:‰Šú‰»Ï
-int _QS_MID1=120;  // —v‘f”n  <= _QS_MID1 ‚Ì‚Æ‚«‚Í@3‚Â‚Ì—v‘f‚©‚çƒsƒ{ƒbƒg‚ğŒˆ’è‚·‚éi‚R“_ˆ—j
-int _QS_MID2=580;  // —v‘f”n  <= _QS_MID2 ‚Ì‚Æ‚«‚Í@9‚Â‚Ì—v‘f‚©‚çƒsƒ{ƒbƒg‚ğŒˆ’è‚·‚éi‚X“_ˆ—j
+int _QS_SORT=0;    // ç›´æ¥ã‚½ãƒ¼ãƒˆ/é–“æ¥ã‚½ãƒ¼ãƒˆã®åˆ‡æ›¿ãˆåˆ¶å¾¡  0:è‡ªå‹•é¸æŠ  1:ç›´æ¥ã‚½ãƒ¼ãƒˆ  2:é–“æ¥ã‚½ãƒ¼ãƒˆ
+int _QS_RNDM=0;    // 0:é˜²å¾¡ãªã—  1:ã‚½ãƒ¼ãƒˆæ™‚é–“ã‚’çˆ†å¢—ã•ã›ã‚‹æ”»æ’ƒã‚’ä¹±æ•°ã‚’ç”¨ã„ã¦é˜²å¾¡ã™ã‚‹  2:åˆæœŸåŒ–æ¸ˆ
+int _QS_MID1=120;  // è¦ç´ æ•°n  <= _QS_MID1 ã®ã¨ãã¯ã€€3ã¤ã®è¦ç´ ã‹ã‚‰ãƒ”ãƒœãƒƒãƒˆã‚’æ±ºå®šã™ã‚‹ï¼ˆï¼“ç‚¹å‡¦ç†ï¼‰
+int _QS_MID2=580;  // è¦ç´ æ•°n  <= _QS_MID2 ã®ã¨ãã¯ã€€9ã¤ã®è¦ç´ ã‹ã‚‰ãƒ”ãƒœãƒƒãƒˆã‚’æ±ºå®šã™ã‚‹ï¼ˆï¼™ç‚¹å‡¦ç†ï¼‰
 
 #include <malloc.h>
 #include <time.h>
-static size_t rndm; // _QS_RNDM=1 ‚Ì‚Æ‚«AÄŒ»«‚Ì‚È‚¢—”‚ğƒZƒbƒg‚·‚é
+static size_t rndm; // _QS_RNDM=1 ã®ã¨ãã€å†ç¾æ€§ã®ãªã„ä¹±æ•°ã‚’ã‚»ãƒƒãƒˆã™ã‚‹
 
-#define ASS_CNT(x) {}   /* {ass_cnt += (x);} ‚Æ‚·‚ê‚ÎA—v‘f‚ÌˆÚ“®‰ñ”‚ğŒv‘ª‚Å‚«‚é*/
+#define ASS_CNT(x) {}   /* {ass_cnt += (x);} ã¨ã™ã‚Œã°ã€è¦ç´ ã®ç§»å‹•å›æ•°ã‚’è¨ˆæ¸¬ã§ãã‚‹*/
 
-///////////////////@—v‘f‚ÌˆÚ“®‚ÉŠÖ‚·‚é‚à‚Ì@•Ê‚È‚à‚Ì‚É‘‚«Š·‚¦‰Â”\‚Å‚·@////////////////////////
+///////////////////ã€€è¦ç´ ã®ç§»å‹•ã«é–¢ã™ã‚‹ã‚‚ã®ã€€åˆ¥ãªã‚‚ã®ã«æ›¸ãæ›ãˆå¯èƒ½ã§ã™ã€€////////////////////////
 #define lli    long long int
 #define MV1(i) {                            a [i]=       b [i];}
 #define MV4(i) {                     ((int*)a)[i]=((int*)b)[i];}
@@ -92,10 +92,10 @@ static void mmprepare( void *base, size_t siz ) {
                                           sbfnc = sbfnc1n;
  }
 }
-///////////////////@‚±‚±‚Ü‚Å‚ª—v‘f‚ÌˆÚ“®‚ÉŠÖ‚·‚é‚à‚Ì@•Ê‚È‚à‚Ì‚É‘‚«Š·‚¦‰Â”\‚Å‚·@//////////////
+///////////////////ã€€ã“ã“ã¾ã§ãŒè¦ç´ ã®ç§»å‹•ã«é–¢ã™ã‚‹ã‚‚ã®ã€€åˆ¥ãªã‚‚ã®ã«æ›¸ãæ›ãˆå¯èƒ½ã§ã™ã€€//////////////
 
 
-///////////////////////////@‚±‚±‚©‚ç‰º‚ÍAqs20‚É‚æ‚éƒ\[ƒgƒvƒƒOƒ‰ƒ€‚Å‚·@//////////////////////
+///////////////////////////ã€€ã“ã“ã‹ã‚‰ä¸‹ã¯ã€qs20ã«ã‚ˆã‚‹ã‚½ãƒ¼ãƒˆãƒ—ãƒ­ã‚°ãƒ©ãƒ ã§ã™ã€€//////////////////////
 #define med3(a,b,c) (CMP(a,b)<=0 ? (CMP(b,c)<=0 ? b : (CMP(a,c)<=0 ? c : a)) : \
                                    (CMP(b,c)>=0 ? b : (CMP(a,c)<=0 ? a : c)) )
 
@@ -110,74 +110,74 @@ static void mmprepare( void *base, size_t siz ) {
 #define D(x)     {x-=Esiz;}
 
 
-/////////////////////////////////@qsort‚Ì•Ï”‚ÌéŒ¾•”•ª‚Ìƒ}ƒNƒ’è‹`@/////////////////////////////
+/////////////////////////////////ã€€qsortã®å¤‰æ•°ã®å®£è¨€éƒ¨åˆ†ã®ãƒã‚¯ãƒ­å®šç¾©ã€€/////////////////////////////
 
-/////////////////////////////////@qsort‚Ì–{‘Ì•”•ª‚Ìƒ}ƒNƒ’è‹`@///////////////////////////////////
+/////////////////////////////////ã€€qsortã®æœ¬ä½“éƒ¨åˆ†ã®ãƒã‚¯ãƒ­å®šç¾©ã€€///////////////////////////////////
 #define SORT_BODY( C, S, K, SORT_TYPE )                                                                   \
 static void SORT_TYPE ( char *L, char *R, size_t size,  int (*cmp)(void *a, void *b) ) {                  \
- /*char *L,*R;                         •ªŠ„’†‚Ì‹æŠÔ‚Ì¶’[E‰E’[‚Ì—v‘f‚Ìæ“ª*/                             \
- char *l,*f,*m,*g,*r;                /*¶A’†‰›A‰E ‹æŠÔ‚ğ•Û‚·‚é‚½‚ß‚Ìƒ|ƒCƒ“ƒ^*/                        \
- int  t;                             /*ì‹Æ—p•Ï”*/                                                       \
- size_t n,v,w;                       /*n:•ªŠ„’†‚Ì‹æŠÔ‚Ì—v‘f”*/                                           \
+ /*char *L,*R;                         åˆ†å‰²ä¸­ã®åŒºé–“ã®å·¦ç«¯ãƒ»å³ç«¯ã®è¦ç´ ã®å…ˆé ­*/                             \
+ char *l,*f,*m,*g,*r;                /*å·¦ã€ä¸­å¤®ã€å³ åŒºé–“ã‚’ä¿æŒã™ã‚‹ãŸã‚ã®ãƒã‚¤ãƒ³ã‚¿*/                        \
+ int  t;                             /*ä½œæ¥­ç”¨å¤‰æ•°*/                                                       \
+ size_t n,v,w;                       /*n:åˆ†å‰²ä¸­ã®åŒºé–“ã®è¦ç´ æ•°*/                                           \
                                                                                                           \
 LOOP:                                                                                                     \
- if (R<=L) {return;}                                      /*—v‘f”‚PˆÈ‰º*/                                \
+ if (R<=L) {return;}                                      /*è¦ç´ æ•°ï¼‘ä»¥ä¸‹*/                                \
                                                                                                           \
- if (L + Esiz == R) {if (CMP(L,R) > 0) S(L,R) return;}    /*—v‘f”‚Q*/                                    \
+ if (L + Esiz == R) {if (CMP(L,R) > 0) S(L,R) return;}    /*è¦ç´ æ•°ï¼’*/                                    \
                                                                                                           \
- n = (R - L) / Esiz + 1;                                  /*—v‘f”‚ğŒvZ‚·‚é*/                            \
+ n = (R - L) / Esiz + 1;                                  /*è¦ç´ æ•°ã‚’è¨ˆç®—ã™ã‚‹*/                            \
                                                                                                           \
  if (n <= 4) {                                                                                            \
    m = R - Esiz;                                                                                          \
    LT(L,m)  GT(m,R)  LE(L,R)  S(m,R)    /*3-5-3,4*/                                                       \
                      else     K(R,m,L)  /*3-5-2*/                                                         \
-            else     {}                 /*3-5-5,7 ‚Ì‚Æ‚«‚Í‰½‚à‚µ‚È‚¢*/                                    \
+            else     {}                 /*3-5-5,7 ã®ã¨ãã¯ä½•ã‚‚ã—ãªã„*/                                    \
    else_GT  GE(m,R)  S(L,R)             /*7-5-5,3*/                                                       \
             else     LE(L,R)  S(L,m)    /*7-5-7,8*/                                                       \
                      else     K(L,m,R)  /*7-5-6*/                                                         \
    else     GT(m,R)  S(L,R)             /*5-5-3*/                                                         \
-            else     {}                 /*5-5-5,7 ‚Ì‚Æ‚«‚Í‰½‚à‚µ‚È‚¢*/                                    \
+            else     {}                 /*5-5-5,7 ã®ã¨ãã¯ä½•ã‚‚ã—ãªã„*/                                    \
    if (n == 4) {                                                                                          \
      char *p = L+Esiz;                                                                                    \
      LT(p,m)  GT(L,p)  S(L,p)           /*3-2-5-7*/                                                       \
-              else     {}               /*3-3,4-5-7 ‚Ì‚Æ‚«‚Í‰½‚à‚µ‚È‚¢*/                                  \
+              else     {}               /*3-3,4-5-7 ã®ã¨ãã¯ä½•ã‚‚ã—ãªã„*/                                  \
      else_GT  LE(p,R)  S(p,m)           /*3-6,7-5-7*/                                                     \
               else     K(p,m,R)         /*3-8-5-7*/                                                       \
-     else     {}                        /*3-5-5-7 ‚Ì‚Æ‚«‚Í‰½‚à‚µ‚È‚¢*/                                    \
+     else     {}                        /*3-5-5-7 ã®ã¨ãã¯ä½•ã‚‚ã—ãªã„*/                                    \
    }                                                                                                      \
    return;                                                                                                \
  } /* n <= 4 */                                                                                           \
                                                                                                           \
                                                                                                           \
- m = L + Esiz * (n >> 1);    /*”z—ñ‚Ì’†‰›‚ğŒvZ*/                                                         \
+ m = L + Esiz * (n >> 1);    /*é…åˆ—ã®ä¸­å¤®ã‚’è¨ˆç®—*/                                                         \
                                                                                                           \
- if (n <= _QS_MID1) {        /*‚R“_ˆ—*/                                                                 \
+ if (n <= _QS_MID1) {        /*ï¼“ç‚¹å‡¦ç†*/                                                                 \
    l=L; r=R; f=m-Esiz; g=m+Esiz;                                                                          \
    LT(l,m) LT(m,r)         {              I(l) D(r) goto _lfgr;} /* 3 5 7                           */    \
            else_GT LT(l,r) {S(m,r)        I(l) D(r) goto _lfgr;} /* 3 7 5                           */    \
                    else_GT {K(l,r,m)      I(l) D(r) goto _lfgr;} /* 5 7 3                           */    \
                    else    {S(m,r)             D(r) goto _5fgr;} /* 5 7 5                           */    \
-           else            {S(g,r)        I(l) I(g) goto _lfgr;} /* 3 5 5          I(l) lfg5 ‚à‚ ‚è */    \
+           else            {S(g,r)        I(l) I(g) goto _lfgr;} /* 3 5 5          I(l) lfg5 ã‚‚ã‚ã‚Š */    \
                                                                                                           \
    else_GT LT(l,r)         {S(l,m)        I(l) D(r) goto _lfgr;} /* 5 3 7                           */    \
            else_GT LT(m,r) {K(l,m,r)      I(l) D(r) goto _lfgr;} /* 7 3 5                           */    \
                    else_GT {S(l,r)        I(l) D(r) goto _lfgr;} /* 7 5 3                           */    \
-                   else    {K(l,f,r)      D(f) D(r) goto _lfgr;} /* 7 5 5   S(l,r) D(r) 5fgr ‚à‚ ‚è */    \
-           else            {S(l,m) S(g,r) I(l) I(g) goto _lfgr;} /* 5 3 5   S(l,m) I(l) lfg5 ‚à‚ ‚è */    \
+                   else    {K(l,f,r)      D(f) D(r) goto _lfgr;} /* 7 5 5   S(l,r) D(r) 5fgr ã‚‚ã‚ã‚Š */    \
+           else            {S(l,m) S(g,r) I(l) I(g) goto _lfgr;} /* 5 3 5   S(l,m) I(l) lfg5 ã‚‚ã‚ã‚Š */    \
                                                                                                           \
    else    LT(m,r)         {              D(r)      goto _5fgr;} /* 5 5 7                           */    \
-           else_GT         {K(l,r,g) I(l) I(g)      goto _lfgr;} /* 5 5 3   S(l,r) I(l) lfg5 ‚à‚ ‚è */    \
-           else            {S(g,r)        I(g)      goto _5fgr;} /* 5 5 5               5fg5 ‚à‚ ‚è */    \
+           else_GT         {K(l,r,g) I(l) I(g)      goto _lfgr;} /* 5 5 3   S(l,r) I(l) lfg5 ã‚‚ã‚ã‚Š */    \
+           else            {S(g,r)        I(g)      goto _5fgr;} /* 5 5 5               5fg5 ã‚‚ã‚ã‚Š */    \
  }                                                                                                        \
                                                                                                           \
                                                                                                           \
- if (n <= _QS_MID2) { /*‚X“_ˆ—*/                                                                        \
+ if (n <= _QS_MID2) { /*ï¼™ç‚¹å‡¦ç†*/                                                                        \
    char *p;                                                                                               \
    if (_QS_RNDM==0) {                                                                                     \
      v=Esiz;                                                                                              \
    }else{                                                                                                 \
-     v=(rndm%5+1)*Esiz;                         /*UŒ‚–hŒä‚Ì‚½‚ß—”‚ğg‚Á‚Äƒsƒ{ƒbƒg‚ğŒˆ‚ß‚é*/            \
-     rndm=(((rndm >> 1) + rndm) & 0x7FFFFFFFL); /*UŒ‚–hŒä‚Ìˆê‘w‚Ì‹­‰»‚Ì‚½‚ß*/                            \
+     v=(rndm%5+1)*Esiz;                         /*æ”»æ’ƒé˜²å¾¡ã®ãŸã‚ä¹±æ•°ã‚’ä½¿ã£ã¦ãƒ”ãƒœãƒƒãƒˆã‚’æ±ºã‚ã‚‹*/            \
+     rndm=(((rndm >> 1) + rndm) & 0x7FFFFFFFL); /*æ”»æ’ƒé˜²å¾¡ã®ä¸€å±¤ã®å¼·åŒ–ã®ãŸã‚*/                            \
    }                                                                                                      \
    p=m-(w=v*3);     f=p+v;    g=f+v;    l=med3(p, f, g);                                                  \
            p+=w;    f+=w;     g+=w;     m=med3(p, f, g);                                                  \
@@ -186,13 +186,13 @@ LOOP:                                                                           
    goto _lfgr;                                                                                            \
  }                                                                                                        \
                                                                                                           \
- {                        /*‚Q‚V“_ˆ—*/                                                                  \
+ {                        /*ï¼’ï¼—ç‚¹å‡¦ç†*/                                                                  \
  char *p,*z1,*z2,*z3;                                                                                     \
  if (_QS_RNDM==0) {                                                                                       \
    v=Esiz;                                                                                                \
  }else{                                                                                                   \
-   v=(rndm%10+1)*Esiz;                        /*UŒ‚–hŒä‚Ì‚½‚ß—”‚ğg‚Á‚Äƒsƒ{ƒbƒg‚ğŒˆ‚ß‚é*/              \
-   rndm=(((rndm >> 1) + rndm) & 0x7FFFFFFFL); /*UŒ‚–hŒä‚Ìˆê‘w‚Ì‹­‰»‚Ì‚½‚ß*/                              \
+   v=(rndm%10+1)*Esiz;                        /*æ”»æ’ƒé˜²å¾¡ã®ãŸã‚ä¹±æ•°ã‚’ä½¿ã£ã¦ãƒ”ãƒœãƒƒãƒˆã‚’æ±ºã‚ã‚‹*/              \
+   rndm=(((rndm >> 1) + rndm) & 0x7FFFFFFFL); /*æ”»æ’ƒé˜²å¾¡ã®ä¸€å±¤ã®å¼·åŒ–ã®ãŸã‚*/                              \
  }                                                                                                        \
  p=m-(w=v*3)*4;     f=p+v;    g=f+v;    z1=med3(p, f, g);                                                 \
            p+=w;    f+=w;     g+=w;     z2=med3(p, f, g);                                                 \
@@ -209,21 +209,21 @@ LOOP:                                                                           
                                                                                                           \
                                                                                                           \
 /*                                                                                                        \
-333...555...777@@lfgr ‚Ìl‚ÌˆÊ’u‚©‚ç”äŠr‚ğn‚ß‚éB357‚ğ’™‚ß‚éB l[fg]rŒn@ ‚±‚ÌŒn‚Í l<=f g<=r ‚ğ•ÛØ     \
+333...555...777ã€€ã€€lfgr ã®lã®ä½ç½®ã‹ã‚‰æ¯”è¼ƒã‚’å§‹ã‚ã‚‹ã€‚357ã‚’è²¯ã‚ã‚‹ã€‚ l[fg]rç³»ã€€ ã“ã®ç³»ã¯ l<=f g<=r ã‚’ä¿è¨¼     \
 L  l f m g r  R                                                                                           \
-m‚Íƒsƒ{ƒbƒg‚ğw‚·Bm‚à‚»‚Ì—v‘f‚à1‰ñ‚Ì•ªŠ„I—¹‚Ì’¼‘O‚Ü‚ÅA•ÏX‚È‚µB                                       \
-u5vƒsƒ{ƒbƒg‚Æ“¯ƒL[‚Ì—v‘f‚ğ•\‚·Bu3v5‚æ‚è¬‚³‚¢ƒL[‚Ì—v‘f‚ğ•\‚·Bu7v5‚æ‚è‘å‚«‚¢ƒL[‚Ì—v‘f‚ğ•\‚·B   \
-ulv333‚Ì‰E—×‚Ì—v‘f‚ğw‚· urv777‚Ì¶—×‚Ì—v‘f‚ğw‚· uLvæ“ª—v‘f‚ğw‚· uRvÅI—v‘f‚ğw‚·             \
-ufv555‚Ì¶—×‚Ì—v‘f‚ğw‚· ugv555‚Ì‰E—×‚Ì—v‘f‚ğw‚·                                                     \
-u.v–¢”äŠr‚Ì—v‘f‚Ì—ñ(’·‚³0ˆÈã)‚ğ•\‚·                                                                    \
+mã¯ãƒ”ãƒœãƒƒãƒˆã‚’æŒ‡ã™ã€‚mã‚‚ãã®è¦ç´ ã‚‚1å›ã®åˆ†å‰²çµ‚äº†ã®ç›´å‰ã¾ã§ã€å¤‰æ›´ãªã—ã€‚                                       \
+ã€Œ5ã€ãƒ”ãƒœãƒƒãƒˆã¨åŒã‚­ãƒ¼ã®è¦ç´ ã‚’è¡¨ã™ã€‚ã€Œ3ã€5ã‚ˆã‚Šå°ã•ã„ã‚­ãƒ¼ã®è¦ç´ ã‚’è¡¨ã™ã€‚ã€Œ7ã€5ã‚ˆã‚Šå¤§ãã„ã‚­ãƒ¼ã®è¦ç´ ã‚’è¡¨ã™ã€‚   \
+ã€Œlã€333ã®å³éš£ã®è¦ç´ ã‚’æŒ‡ã™ ã€Œrã€777ã®å·¦éš£ã®è¦ç´ ã‚’æŒ‡ã™ ã€ŒLã€å…ˆé ­è¦ç´ ã‚’æŒ‡ã™ ã€ŒRã€æœ€çµ‚è¦ç´ ã‚’æŒ‡ã™             \
+ã€Œfã€555ã®å·¦éš£ã®è¦ç´ ã‚’æŒ‡ã™ ã€Œgã€555ã®å³éš£ã®è¦ç´ ã‚’æŒ‡ã™                                                     \
+ã€Œ.ã€æœªæ¯”è¼ƒã®è¦ç´ ã®åˆ—(é•·ã•0ä»¥ä¸Š)ã‚’è¡¨ã™                                                                    \
                                                                                                           \
-333355555...777 ‚É‚È‚Á‚½‚ç 333355555...777 ‚É‚·‚éB333355555333...777 ‚Æ‚µ‚Ä‘æ2‚Ìu3v‚ğ’™‚ß‚éB          \
+333355555...777 ã«ãªã£ãŸã‚‰ 333355555...777 ã«ã™ã‚‹ã€‚333355555333...777 ã¨ã—ã¦ç¬¬2ã®ã€Œ3ã€ã‚’è²¯ã‚ã‚‹ã€‚          \
    fl    g r                  f     l r               f     g  l r                                        \
-   f<l ‚É‚È‚Á‚½‚ç                   l=g; ‚·‚éB             g‚Æl‚ÌŠÔ‚Éu3v‚ğ’™‚ß‚éB [fg]lrŒn  r<l‚à‚ ‚è \
+   f<l ã«ãªã£ãŸã‚‰                   l=g; ã™ã‚‹ã€‚             gã¨lã®é–“ã«ã€Œ3ã€ã‚’è²¯ã‚ã‚‹ã€‚ [fg]lrç³»  r<lã‚‚ã‚ã‚Š \
                                                                                                           \
-333...555557777 ‚É‚È‚Á‚½‚ç 333...555557777 ‚É‚·‚éB333...777555557777 ‚Æ‚µ‚Ä‘æ2‚Ìu7v‚ğ’™‚ß‚éB          \
+333...555557777 ã«ãªã£ãŸã‚‰ 333...555557777 ã«ã™ã‚‹ã€‚333...777555557777 ã¨ã—ã¦ç¬¬2ã®ã€Œ7ã€ã‚’è²¯ã‚ã‚‹ã€‚          \
    l f    rg  R               l r     g  R            l r  f     g                                        \
-          r<g ‚É‚È‚Á‚½‚ç        r=f; ‚·‚éB             r‚Æf‚ÌŠÔ‚Éu7v‚ğ’™‚ß‚éB     lr[fg]Œn  r<l‚à‚ ‚è \
+          r<g ã«ãªã£ãŸã‚‰        r=f; ã™ã‚‹ã€‚             rã¨fã®é–“ã«ã€Œ7ã€ã‚’è²¯ã‚ã‚‹ã€‚     lr[fg]ç³»  r<lã‚‚ã‚ã‚Š \
 */                                                                                                        \
                                                                                                           \
 chk:                                          /*L l f  g r R */                                           \
@@ -246,8 +246,8 @@ _lfgr:                                              /*33...55...77*/            
                                                                                                           \
                                                                                                           \
        /*  lf  gr  */                                                                                     \
-_5fgr: /*335.55..77    “ñ’Ê‚è‚ ‚é*/                                                                       \
- if ((f-l+g) < (r)) goto _5fgr_g;     /* (f-l) < (r-g) ‚ÌˆÓ–¡ */                                          \
+_5fgr: /*335.55..77    äºŒé€šã‚Šã‚ã‚‹*/                                                                       \
+ if ((f-l+g) < (r)) goto _5fgr_g;     /* (f-l) < (r-g) ã®æ„å‘³ */                                          \
                                                                                                           \
 _5fgr_f:                                                                                                  \
  if (l==f) {D(f) l=g;                                          goto _fglr;     }  /*33555..77*/           \
@@ -270,8 +270,8 @@ _5fgr_g:                                                                        
                                                                                                           \
                                                                                                           \
        /*  l f  g r  */                                                                                   \
-_7fg5: /*337..55..577    “ñ’Ê‚è‚ ‚é*/                                                                     \
- if ((f-l+g) < (r)) goto _7fg5_g;     /* (f-l) < (r-g) ‚ÌˆÓ–¡ */                                          \
+_7fg5: /*337..55..577    äºŒé€šã‚Šã‚ã‚‹*/                                                                     \
+ if ((f-l+g) < (r)) goto _7fg5_g;     /* (f-l) < (r-g) ã®æ„å‘³ */                                          \
                                                                                                           \
 _7fg5_f:                                                                                                  \
  if (l==f) {S(l,r) D(f) l=g; D(r)              goto _fglr; } /*33755.577*/                                \
@@ -290,7 +290,7 @@ _7fg5_g:                                                                        
                                                                                                           \
        /*  l r f  g */                                                                                    \
 _5rfg: /*335..775577*/                                                                                    \
- if (l==r) {       I(l) D(r)                                       goto fin_rlfg;}  /*–{–{3357775577*/    \
+ if (l==r) {       I(l) D(r)                                       goto fin_rlfg;}  /*æœ¬æœ¬3357775577*/    \
  LT(r,m)   {_53fg: {if (r==f) S(l,r) else K(l,r,f)} I(l) D(r) D(f) goto _lrfg;   }  /*      r  f  g */    \
  else_GT   {_57fg: D(r)                                            goto _5rfg;   }                        \
  else      {_55fg: {if (r!=f) S(r,f)} D(r) D(f)                    goto _5rfg;   }                        \
@@ -302,7 +302,7 @@ _7rfg: /*337..775577*/                                                          
  else      {_75fg: {if (r!=f) S(r,f)} D(r) D(f) goto _7rfg;   }  /*337.5775577*/                          \
                                                                                                           \
                                                                                                           \
-_lrfg: /*m‚Ì—v‘f‚ªˆÚ“®‚·‚é‚±‚Æ‚Í‚È‚¢*/                                                                    \
+_lrfg: /*mã®è¦ç´ ãŒç§»å‹•ã™ã‚‹ã“ã¨ã¯ãªã„*/                                                                    \
  if (l<r)  GT(r,m) {_l7fg: D(r)                                           goto _lrfg;}                    \
            else_LT {_l3fg: GT(l,m) {_73fG: S(l,r) I(l) D(r)               goto _lrfg;}                    \
                            else_LT {_33fg: I(l) if (l<r) {                goto _l3fg;}                    \
@@ -313,10 +313,10 @@ _lrfg: /*m‚Ì—v‘f‚ªˆÚ“®‚·‚é‚±‚Æ‚Í‚È‚¢*/                                          
  else                                                                                                     \
  if (l==r) LT(l,m) {_3fg:  I(l)                         goto fin_rlfg;}                                   \
            else_GT {_7fg:  D(r)                         goto fin_rlfg;}                                   \
-           else    {_5fg:  I(l) D(r)                    goto fin_rlfg;}  /*–{–{333577555777*/             \
+           else    {_5fg:  I(l) D(r)                    goto fin_rlfg;}  /*æœ¬æœ¬333577555777*/             \
  else              {                                    goto fin_rlfg;}  /*       r f   g  */             \
                                                                                                           \
-fin_rlfg:  /* r+Esiz == l || r+Esiz*2 == l ‚ª¬—§ */                                                      \
+fin_rlfg:  /* r+Esiz == l || r+Esiz*2 == l ãŒæˆç«‹ */                                                      \
  I(f);                                                                                                    \
  if ((v=f-l)<=0) {l=r; r=g; goto fin;}                                                                    \
  if ((w=g-f)==Esiz) S(l,f)                                                                                \
@@ -337,10 +337,10 @@ _fglr:                                                                          
  else                                                                                                     \
  if (l==r) LT(l,m) {_fg3:  I(l)       goto fin_fgrl;}  /*            r  */                                \
            else_GT {_fg7:  D(r)       goto fin_fgrl;}  /*     f   g  l  */                                \
-           else    {_fg5:  I(l) D(r)  goto fin_fgrl;}  /*–{–{33555333577*/                                \
+           else    {_fg5:  I(l) D(r)  goto fin_fgrl;}  /*æœ¬æœ¬33555333577*/                                \
  else              {                  goto fin_fgrl;}                                                     \
                                                                                                           \
-fin_fgrl:  /* r+Esiz == l || r+Esiz*2 == l ‚ª¬—§  */                                                     \
+fin_fgrl:  /* r+Esiz == l || r+Esiz*2 == l ãŒæˆç«‹  */                                                     \
  I(f);                                                         /*333355533333777   3333555333335777*/     \
  if ((v=r-g+Esiz)<=0) {r=l; l=f-Esiz; goto fin;}               /*   f   g   rl        f   g   r l  */     \
  if ((w=g-f)==Esiz) S(f,r)                                                                                \
@@ -351,54 +351,54 @@ fin_fgrl:  /* r+Esiz == l || r+Esiz*2 == l ‚ª¬—§  */                           
                                                                                                           \
                                                                                                           \
 fin:                                                                                                      \
- if (l-L < R-r) {SORT_TYPE( L, l, Esiz, cmp);  L=r;} /*¶‚©‚çæ‚Éƒ\[ƒg‚·‚é*/                             \
- else           {SORT_TYPE( r, R, Esiz, cmp);  R=l;} /*‰E‚©‚çæ‚Éƒ\[ƒg‚·‚é*/                             \
+ if (l-L < R-r) {SORT_TYPE( L, l, Esiz, cmp);  L=r;} /*å·¦ã‹ã‚‰å…ˆã«ã‚½ãƒ¼ãƒˆã™ã‚‹*/                             \
+ else           {SORT_TYPE( r, R, Esiz, cmp);  R=l;} /*å³ã‹ã‚‰å…ˆã«ã‚½ãƒ¼ãƒˆã™ã‚‹*/                             \
  goto LOOP;                                                                                               \
 }
 
 
 
-/////////////////////@’¼Úƒ\[ƒg—p‚É ƒ}ƒNƒ‚ğ“WŠJ@//////////////////////
+/////////////////////ã€€ç›´æ¥ã‚½ãƒ¼ãƒˆç”¨ã« ãƒã‚¯ãƒ­ã‚’å±•é–‹ã€€//////////////////////
 #define C1(x,y)              {ASS_CNT(1)               mvfnc(x,y  )  ;}
 #define S1(x,y)              {ASS_CNT(2)               swfnc(x,y  )  ;}
 #define K1(x,y,z)            {ASS_CNT(3)               rtfnc(x,y,z)  ;}
 #define mmswapblock(a,b,len) {ASS_CNT(((len)/Esiz)*2)  sbfnc((a),(b),(len));}
 #define CMP(a,b)  cmp(a,b)
-#define Esiz      size        /* Esiz ‚ÍÀÛ‚Éƒ\[ƒg‚³‚ê‚é”z—ñ‚Ì—v‘f‚Ì‘å‚«‚³*/
+#define Esiz      size        /* Esiz ã¯å®Ÿéš›ã«ã‚½ãƒ¼ãƒˆã•ã‚Œã‚‹é…åˆ—ã®è¦ç´ ã®å¤§ãã•*/
 
- SORT_BODY( C1, S1, K1, sort_direct )      /************* ’¼Ú ƒ\[ƒg ‚Ì–{‘Ì *****************/
+ SORT_BODY( C1, S1, K1, sort_direct )      /************* ç›´æ¥ ã‚½ãƒ¼ãƒˆ ã®æœ¬ä½“ *****************/
 
 
 
-/////////////////////@ptr_t ƒ\[ƒg—p‚É ƒ}ƒNƒ‚ğ“WŠJ@//////////////////////
+/////////////////////ã€€ptr_t ã‚½ãƒ¼ãƒˆç”¨ã« ãƒã‚¯ãƒ­ã‚’å±•é–‹ã€€//////////////////////
 #define PT        *(char**)
 #define C2(x,y)   {ASS_CNT(1)                   PT(x)=PT(y);                         }
 #define S2(x,y)   {ASS_CNT(2) {char *tmp=PT(x); PT(x)=PT(y); PT(y)=tmp;             }}
 #define K2(x,y,z) {ASS_CNT(3) {char *tmp=PT(x); PT(x)=PT(y); PT(y)=PT(z); PT(z)=tmp;}}
 #undef  Esiz
-#define Esiz  sizeof(char*)  /* Esiz ‚ÍÀÛ‚Éƒ\[ƒg‚³‚ê‚é”z—ñ‚Ì—v‘f‚Ì‘å‚«‚³*/
+#define Esiz  sizeof(char*)  /* Esiz ã¯å®Ÿéš›ã«ã‚½ãƒ¼ãƒˆã•ã‚Œã‚‹é…åˆ—ã®è¦ç´ ã®å¤§ãã•*/
 
- SORT_BODY( C2, S2, K2, sort_ptr_t )      /************* ptr_t ƒ\[ƒg ‚Ì–{‘Ì *****************/
+ SORT_BODY( C2, S2, K2, sort_ptr_t )      /************* ptr_t ã‚½ãƒ¼ãƒˆ ã®æœ¬ä½“ *****************/
 
 
 
-/////////////////////@ŠÔÚƒ\[ƒg—p‚É ƒ}ƒNƒ‚ğ“WŠJ@////////////////////////
+/////////////////////ã€€é–“æ¥ã‚½ãƒ¼ãƒˆç”¨ã« ãƒã‚¯ãƒ­ã‚’å±•é–‹ã€€////////////////////////
 #undef  CMP
 #define CMP(a,b)  cmp( *(void**)(a), *(void**)(b) )
 
- SORT_BODY( C2, S2, K2, sort_indirect )       /************* ŠÔÚ ƒ\[ƒg ‚Ì–{‘Ì *****************/
+ SORT_BODY( C2, S2, K2, sort_indirect )       /************* é–“æ¥ ã‚½ãƒ¼ãƒˆ ã®æœ¬ä½“ *****************/
 
 
 
-///////////////@ƒ\[ƒg‚Ì“ü‚èŒû@’¼Úƒ\[ƒgEptr_tƒ\[ƒgEŠÔÚƒ\[ƒg‚ÖU‚è•ª‚¯‚é@////////////////
+///////////////ã€€ã‚½ãƒ¼ãƒˆã®å…¥ã‚Šå£ã€€ç›´æ¥ã‚½ãƒ¼ãƒˆãƒ»ptr_tã‚½ãƒ¼ãƒˆãƒ»é–“æ¥ã‚½ãƒ¼ãƒˆã¸æŒ¯ã‚Šåˆ†ã‘ã‚‹ã€€////////////////
 void qsort( void *base, size_t nel, size_t size,  int (*cmp)(void *a, void *b) )
-    // base : ƒ\[ƒg‚µ‚æ‚¤‚Æ‚·‚é”z—ñ‚Ö‚Ìƒ|ƒCƒ“ƒ^
-    // nel  : ”z—ñbase‚Ì—v‘f”
-    // size : ”z—ñbase‚Ì—v‘f‚Ì‘å‚«‚³iƒoƒCƒg’PˆÊj
-    // cmp  : —v‘f‚Ì‘å¬”äŠr‚ğ‚·‚éŠÖ”‚Ö‚Ìƒ|ƒCƒ“ƒ^
+    // base : ã‚½ãƒ¼ãƒˆã—ã‚ˆã†ã¨ã™ã‚‹é…åˆ—ã¸ã®ãƒã‚¤ãƒ³ã‚¿
+    // nel  : é…åˆ—baseã®è¦ç´ æ•°
+    // size : é…åˆ—baseã®è¦ç´ ã®å¤§ãã•ï¼ˆãƒã‚¤ãƒˆå˜ä½ï¼‰
+    // cmp  : è¦ç´ ã®å¤§å°æ¯”è¼ƒã‚’ã™ã‚‹é–¢æ•°ã¸ã®ãƒã‚¤ãƒ³ã‚¿
 {
  if (_QS_RNDM == 1) {
-   rndm = (clock() & 0x7FFFFFFFL);   /* clock()‚ğ—””­¶Ší‚Æ‚µ‚Äg—pB³®”‚ğ•ÛØ */
+   rndm = (clock() & 0x7FFFFFFFL);   /* clock()ã‚’ä¹±æ•°ç™ºç”Ÿå™¨ã¨ã—ã¦ä½¿ç”¨ã€‚æ­£æ•´æ•°ã‚’ä¿è¨¼ */
    _QS_RNDM = 2;
  }
 
@@ -408,10 +408,10 @@ void qsort( void *base, size_t nel, size_t size,  int (*cmp)(void *a, void *b) )
  if (size <   80)                                                   goto direct;
  if (nel  <   70)                                                   goto direct;
 
- // ’¼Úƒ\[ƒg‚ğ‘I‘ğ‚·‚é‚½‚ß‚É•K—v‚Èeqcnt‚ÍAnel‚Æsize‚²‚Æ‚É•Ï‰»‚·‚éBÀŒ±‚É‚æ‚èeqcnt‚Ì’l‚ğ‹‚ß‚½B
- // ‰º‚Ínel(10000000`100) X size(80`6000)‚Å‚Ìeqcnt‚Ì•K—v’lBeqcnt‚ª‚±‚Ì’lˆÈã‚Å’¼Úƒ\[ƒg‚ğÀsB
- // ‰º‚Ínel‰ò ‰E‚Ì’l‚Ísize     1  2  3  4  4  5  6  7  8  8  9 10 11 12 16 20 24 28 32 36 40 44 48 52 56 60
- // ‰º‚Ínel‰ò ‰E‚Ì’l‚Ísize 80 60 40 20 00 80 60 40 20 00 80 60 40 20 00 00 00 00 00 00 00 00 00 00 00 00 00
+ // ç›´æ¥ã‚½ãƒ¼ãƒˆã‚’é¸æŠã™ã‚‹ãŸã‚ã«å¿…è¦ãªeqcntã¯ã€nelã¨sizeã”ã¨ã«å¤‰åŒ–ã™ã‚‹ã€‚å®Ÿé¨“ã«ã‚ˆã‚Šeqcntã®å€¤ã‚’æ±‚ã‚ãŸã€‚
+ // ä¸‹ã¯nel(10000000ï½100) X size(80ï½6000)ã§ã®eqcntã®å¿…è¦å€¤ã€‚eqcntãŒã“ã®å€¤ä»¥ä¸Šã§ç›´æ¥ã‚½ãƒ¼ãƒˆã‚’å®Ÿè¡Œã€‚
+ // ä¸‹ã¯nelå¡Š å³ã®å€¤ã¯size     1  2  3  4  4  5  6  7  8  8  9 10 11 12 16 20 24 28 32 36 40 44 48 52 56 60
+ // ä¸‹ã¯nelå¡Š å³ã®å€¤ã¯size 80 60 40 20 00 80 60 40 20 00 80 60 40 20 00 00 00 00 00 00 00 00 00 00 00 00 00
  static char eq_tab10M []={ 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 7, 7, 7, 7, 7, 7};
  static char eq_tab4M  []={ 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 7, 7, 7, 7, 7, 7, 7};
  static char eq_tab2M  []={ 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 3, 7, 7, 7, 7, 7, 7, 7, 7};
@@ -428,7 +428,7 @@ void qsort( void *base, size_t nel, size_t size,  int (*cmp)(void *a, void *b) )
  static char eq_tab400 []={00, 2, 3, 4, 5, 5, 5, 5, 6, 6, 7, 7, 7, 7, 7, 7, 8, 8, 8, 8, 8, 8, 8, 9, 9, 9, 9};
  static char eq_tab200 []={ 0, 1, 3, 5, 5, 5, 6, 6, 6, 7, 7, 7, 8, 8, 8, 8, 8, 8, 8, 8, 8, 9, 9, 9,10,10,10};
  static char eq_tab100 []={ 0, 1, 3, 4, 5, 6, 6, 7, 7, 8, 8, 8, 9, 9,10,10,10,10,10,10,10,10,10,10,11,11,11};
- static char*eq_tab;           // "00"‚ÍŒ³" 1"  "03"‚ÍŒ³" 4"   "01"‚Í" 1"->"00"->"01"
+ static char*eq_tab;           // "00"ã¯å…ƒ" 1"  "03"ã¯å…ƒ" 4"   "01"ã¯" 1"->"00"->"01"
 
  if      (nel <    150) eq_tab = eq_tab100 ;
  else if (nel <    300) eq_tab = eq_tab200 ;
@@ -447,40 +447,40 @@ void qsort( void *base, size_t nel, size_t size,  int (*cmp)(void *a, void *b) )
  else if (nel <7000000) eq_tab = eq_tab4M  ;
  else /*  nel>=7000000*/eq_tab = eq_tab10M ;
 
- //eq_tab[nel,size]‚Ì’l‚ğæ‚èo‚·Beqcnt(0`32)‚ª‚±‚Ì’lˆÈã‚È‚ç’¼Úƒ\[ƒg,‚»‚êˆÈŠO‚È‚çŠÔÚƒ\[ƒg
+ //eq_tab[nel,size]ã®å€¤ã‚’å–ã‚Šå‡ºã™ã€‚eqcnt(0ï½32)ãŒã“ã®å€¤ä»¥ä¸Šãªã‚‰ç›´æ¥ã‚½ãƒ¼ãƒˆ,ãã‚Œä»¥å¤–ãªã‚‰é–“æ¥ã‚½ãƒ¼ãƒˆ
  {size_t siz = ( size> 6000 ? 6000 : size);
-  int eq_low = ( siz < 1200 ? eq_tab[(siz-80)/80] : eq_tab[(siz-1200)/400+14] ); //•\‚Í¶‰E‚Q•”§
-  if (eq_low == 0 ) goto   direct;     // eqcnt‚Ì’l‚ğŒvZ‚·‚é‚Ü‚Å‚à‚È‚­ eqcnt(0`32) >= eq_low(0)
+  int eq_low = ( siz < 1200 ? eq_tab[(siz-80)/80] : eq_tab[(siz-1200)/400+14] ); //è¡¨ã¯å·¦å³ï¼’éƒ¨åˆ¶
+  if (eq_low == 0 ) goto   direct;     // eqcntã®å€¤ã‚’è¨ˆç®—ã™ã‚‹ã¾ã§ã‚‚ãªã eqcnt(0ï½32) >= eq_low(0)
 
-#define VBUN 64          /* ”äŠr‚·‚é‘g(ƒyƒA[)‚Ì”‚Ì‚Q”{==VBUNB     nel >= VBUN ‚Ì•K—v‚ ‚èB*/
+#define VBUN 64          /* æ¯”è¼ƒã™ã‚‹çµ„(ãƒšã‚¢ãƒ¼)ã®æ•°ã®ï¼’å€==VBUNã€‚     nel >= VBUN ã®å¿…è¦ã‚ã‚Šã€‚*/
 
-  //“K“–‚È32‘g‚Ì—v‘f‚ğ”äŠr‚µ‚ÄA“™‚µ‚¢‘g‚Ì”‚ğ eqcnti“¯’lƒL[‚ÌŒÂ”j‚Æ‚·‚éBeqcnt==0`32‚É‚È‚éB
+  //é©å½“ãª32çµ„ã®è¦ç´ ã‚’æ¯”è¼ƒã—ã¦ã€ç­‰ã—ã„çµ„ã®æ•°ã‚’ eqcntï¼ˆåŒå€¤ã‚­ãƒ¼ã®å€‹æ•°ï¼‰ã¨ã™ã‚‹ã€‚eqcnt==0ï½32ã«ãªã‚‹ã€‚
   int eqcnt=0; size_t vsize=(nel/VBUN)*size; size_t half=vsize*(VBUN/2); char *ip_end=base+half;
   for (char *ip=base; ip<ip_end; ip+=vsize) if (cmp(ip,ip+half)==0) eqcnt++;
 
   if (eqcnt >= eq_low) goto direct; else goto indirect;
  }
 
-   direct: mmprepare( base, size          ); sort_direct( base, (nel-1)*size         +base, size, cmp );  return; // ’¼Úƒ\[ƒg‚ÌÀs
+   direct: mmprepare( base, size          ); sort_direct( base, (nel-1)*size         +base, size, cmp );  return; // ç›´æ¥ã‚½ãƒ¼ãƒˆã®å®Ÿè¡Œ
 
- ptr_type: mmprepare( base, sizeof(char*) ); sort_ptr_t ( base, (nel-1)*sizeof(char*)+base, size, cmp );  return; //ptr_tƒ\[ƒg‚ÌÀs
+ ptr_type: mmprepare( base, sizeof(char*) ); sort_ptr_t ( base, (nel-1)*sizeof(char*)+base, size, cmp );  return; //ptr_tã‚½ãƒ¼ãƒˆã®å®Ÿè¡Œ
 
  indirect: {}
- size_t Z = nel * sizeof(char*) ;                 //Z‚Íƒ|ƒCƒ“ƒ^”z—ñ‚PŒÂ‚ÌƒoƒCƒg”
- char *ptr = malloc( Z + size );                  //ƒ|ƒCƒ“ƒ^”z—ñ‚Æì‹Æ—p—v‘f‚P‚Â‚ğ“¯‚ÉŠm•Û‚·‚é
- if (ptr == NULL) {goto direct;}                  //ì‹Æ—Ìˆæ‚ªŠm•Û‚Å‚«‚È‚¢‚Ì‚ÅA’¼Úƒ\[ƒg‚ğ‚İ‚é
+ size_t Z = nel * sizeof(char*) ;                 //Zã¯ãƒã‚¤ãƒ³ã‚¿é…åˆ—ï¼‘å€‹ã®ãƒã‚¤ãƒˆæ•°
+ char *ptr = malloc( Z + size );                  //ãƒã‚¤ãƒ³ã‚¿é…åˆ—ã¨ä½œæ¥­ç”¨è¦ç´ ï¼‘ã¤ã‚’åŒæ™‚ã«ç¢ºä¿ã™ã‚‹
+ if (ptr == NULL) {goto direct;}                  //ä½œæ¥­é ˜åŸŸãŒç¢ºä¿ã§ããªã„ã®ã§ã€ç›´æ¥ã‚½ãƒ¼ãƒˆã‚’è©¦ã¿ã‚‹
  {
   void **tp=(void**)ptr; char *ip=base, *ip_end=(char*)base+nel*size;
-  for (; ip<ip_end; ip+=size, tp++) *tp=(void*)ip;  //ŠÔÚƒ\[ƒg‚Ìˆ×‚ÉAƒ|ƒCƒ“ƒ^”z—ñptr‚Ì—v‘f‚ğƒZƒbƒg
+  for (; ip<ip_end; ip+=size, tp++) *tp=(void*)ip;  //é–“æ¥ã‚½ãƒ¼ãƒˆã®ç‚ºã«ã€ãƒã‚¤ãƒ³ã‚¿é…åˆ—ptrã®è¦ç´ ã‚’ã‚»ãƒƒãƒˆ
  }
 
- mmprepare( ptr, sizeof(char*) ); sort_indirect( ptr, (nel-1)*sizeof(char*)+ptr, sizeof(char*), cmp ); // ŠÔÚƒ\[ƒg‚ÌÀs
+ mmprepare( ptr, sizeof(char*) ); sort_indirect( ptr, (nel-1)*sizeof(char*)+ptr, sizeof(char*), cmp ); // é–“æ¥ã‚½ãƒ¼ãƒˆã®å®Ÿè¡Œ
 
- // ƒ|ƒCƒ“ƒ^”z—ñ‚ğ—p‚¢‚ÄA–{—ˆ‚Ì”z—ñ‚Ì—v‘f‚ğˆÚ“®‚µ‚Ä‚©‚çI—¹‚·‚é
+ // ãƒã‚¤ãƒ³ã‚¿é…åˆ—ã‚’ç”¨ã„ã¦ã€æœ¬æ¥ã®é…åˆ—ã®è¦ç´ ã‚’ç§»å‹•ã—ã¦ã‹ã‚‰çµ‚äº†ã™ã‚‹
  mmprepare( base, size );
- void **tp;  char *ip, *kp, *tmp=ptr+Z; size_t i;   //tmp‚Íì‹Æ—p—v‘f
+ void **tp;  char *ip, *kp, *tmp=ptr+Z; size_t i;   //tmpã¯ä½œæ¥­ç”¨è¦ç´ 
  // Knuth vol. 3 (2nd ed.) exercise 5.2-10.
- // tp[i]‚Íƒ‹[ƒv‚Ì…Œû(æ“ª)‚ğw‚·Bip‚Í‘Ş”ğ—v‘f‚ÌŒ³‚ÌˆÊ’u,kp‚Í‹ó‚«’n‚ğw‚·
+ // tp[i]ã¯ãƒ«ãƒ¼ãƒ—ã®ç³¸å£(å…ˆé ­)ã‚’æŒ‡ã™ã€‚ipã¯é€€é¿è¦ç´ ã®å…ƒã®ä½ç½®,kpã¯ç©ºãåœ°ã‚’æŒ‡ã™
  for (tp = (void **)ptr, i = 0, ip = base; i < nel; i++, ip += size)
    if ((kp = tp[i]) != ip) {
      size_t j = i;
