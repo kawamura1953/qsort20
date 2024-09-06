@@ -1,9 +1,9 @@
 #!/bin/bash
 
-cc  -O1  -w  -fcommon  main_prog.c                -o my_qsort
-                                                             
-cc  -O1  -w                        -c qsort20.c              
-cc  -O1  -w  -fcommon  main_prog.c    qsort20.o   -o qsort20 
+cc  -O1                             main_prog.c                -o my_qsort
+                                                                          
+cc  -O1                                          -c qsort20.c             
+cc  -O1  -fcommon  -Dqsort=qsort20  main_prog.c     qsort20.o  -o qsort20 
 
 prin=benchmark
 

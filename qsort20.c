@@ -12,7 +12,7 @@ int _QS_RNDM=0;    // 0:防御なし  1:ソート時間を爆増させる攻撃�
 int _QS_MID1=120;  // 要素数n  <= _QS_MID1 のときは　3つの要素からピボットを決定する（３点処理）
 int _QS_MID2=580;  // 要素数n  <= _QS_MID2 のときは　9つの要素からピボットを決定する（９点処理）
 
-#include <malloc.h>
+#include <stdlib.h>
 #include <time.h>
 static size_t rndm; // _QS_RNDM=1 のとき、再現性のない乱数をセットする
 
@@ -109,8 +109,6 @@ static void mmprepare( void *base, size_t siz ) {
 #define I(x)     {x+=Esiz;}
 #define D(x)     {x-=Esiz;}
 
-
-/////////////////////////////////　qsortの変数の宣言部分のマクロ定義　/////////////////////////////
 
 /////////////////////////////////　qsortの本体部分のマクロ定義　///////////////////////////////////
 #define SORT_BODY( C, S, K, SORT_TYPE )                                                                   \
@@ -391,7 +389,7 @@ fin:                                                                            
 
 
 ///////////////　ソートの入り口　直接ソート・ptr_tソート・間接ソートへ振り分ける　////////////////
-void qsort( void *base, size_t nel, size_t size,  int (*cmp)(void *a, void *b) )
+void qsort20( void *base, size_t nel, size_t size,  int (*cmp)(void *a, void *b) )
     // base : ソートしようとする配列へのポインタ
     // nel  : 配列baseの要素数
     // size : 配列baseの要素の大きさ（バイト単位）
