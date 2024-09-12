@@ -53,15 +53,15 @@ static size_t high, low;
 
 static void   mvfnc8  ( char *a, const char *b ) {                 MV8(0)     }
 static void   mvfnc4  ( char *a, const char *b ) {                 MV4(0)     }
-static void   mvfnc8n ( char *a, const char *b ) {HIGHLOW(high,low,MV8,8,1==1)}
-static void   mvfnc4n ( char *a, const char *b ) {HIGHLOW(high,low,MV4,4,1==1)}
-static void   mvfnc1n ( char *a, const char *b ) {HIGHLOW(high,low,MV1,1,1==1)}
+static void   mvfnc8n ( char *a, const char *b ) {HIGHLOW(high,low,MV8,8,1)}
+static void   mvfnc4n ( char *a, const char *b ) {HIGHLOW(high,low,MV4,4,1)}
+static void   mvfnc1n ( char *a, const char *b ) {HIGHLOW(high,low,MV1,1,1)}
 static void (*mvfnc)  ( char *a, const char *b );
 static void   swfnc8  ( char *a,       char *b ) {                 SW8(0)     }
 static void   swfnc4  ( char *a,       char *b ) {                 SW4(0)     }
-static void   swfnc8n ( char *a,       char *b ) {HIGHLOW(high,low,SW8,8,1==1)}
-static void   swfnc4n ( char *a,       char *b ) {HIGHLOW(high,low,SW4,4,1==1)}
-static void   swfnc1n ( char *a,       char *b ) {HIGHLOW(high,low,SW1,1,1==1)}
+static void   swfnc8n ( char *a,       char *b ) {HIGHLOW(high,low,SW8,8,1)}
+static void   swfnc4n ( char *a,       char *b ) {HIGHLOW(high,low,SW4,4,1)}
+static void   swfnc1n ( char *a,       char *b ) {HIGHLOW(high,low,SW1,1,1)}
 static void (*swfnc)  ( char *a,       char *b );
 static void   rtfnc8  ( char *a,       char *b,       char *c ) {                RT8(0)}
 static void   rtfnc4  ( char *a,       char *b,       char *c ) {                RT4(0)}
@@ -69,9 +69,9 @@ static void   rtfnc8n ( char *a,       char *b,       char *c ) HIGHLOW(high,low
 static void   rtfnc4n ( char *a,       char *b,       char *c ) HIGHLOW(high,low,RT4,4,c+=32)
 static void   rtfnc1n ( char *a,       char *b,       char *c ) HIGHLOW(high,low,RT1,1,c+= 8)
 static void (*rtfnc)  ( char *a,       char *b,       char *c );
-static void   sbfnc8n ( char *a, char *b, size_t s ) HIGHLOW((s&(-64)),((s&(64-1))/8),SW8,8,1==1)
-static void   sbfnc4n ( char *a, char *b, size_t s ) HIGHLOW((s&(-32)),((s&(32-1))/4),SW4,4,1==1)
-static void   sbfnc1n ( char *a, char *b, size_t s ) HIGHLOW((s&( -8)),((s&( 8-1))/1),SW1,1,1==1)
+static void   sbfnc8n ( char *a, char *b, size_t s ) HIGHLOW((s&(-64)),((s&(64-1))/8),SW8,8,1)
+static void   sbfnc4n ( char *a, char *b, size_t s ) HIGHLOW((s&(-32)),((s&(32-1))/4),SW4,4,1)
+static void   sbfnc1n ( char *a, char *b, size_t s ) HIGHLOW((s&( -8)),((s&( 8-1))/1),SW1,1,1)
 static void (*sbfnc)  ( char *a, char *b, size_t s );
 
 static void mmprepare( void *base, size_t siz ) {
